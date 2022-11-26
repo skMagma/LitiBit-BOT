@@ -51,7 +51,7 @@ discord command tps:
 discord command warn <user> <text>:
     prefixes: !
     permissions: manage messages
-    permission message: you no hab perms nob
+    permission message: #message for no permission here
     trigger:
         post "%arg-1% has been warned" to event-channel
         post "%event-user% warned %arg-1% for reason %arg-2%" to channel with id {@modlog}
