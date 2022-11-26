@@ -1,0 +1,58 @@
+#Feel free to remove comments
+#Replace the zeros with channel ids
+
+#Bot configuration
+options:
+	botname: ""
+  #insert name of bot here
+	bottoken: ""
+  #insert token above
+	chatchannel: "0000000000000000000"
+  #chat channel is where the chat, join and leave messages will be shown
+	consolechannel: "0000000000000000000"
+  #console channel is where the commands will be shown
+	modlog: "0000000000000000000"
+  #modlog channel displays all punishments from executed commands
+
+#Starting the bot
+define new bot named {@botname}: 
+    
+    token: {@bottoken}
+    
+    intents: default intents
+    
+    policy: all
+    auto reconnect: true
+    compression: none
+
+#Message that shows on player join
+on join:
+	post "%player% has joined" to channel with id {@chatchannel}
+
+#Message that shows on player quit
+on quit:
+	post "%player% has left" to channel with id {@chatchannel}
+
+#Message that shows on message send
+on chat:
+	post "%player's group% %player%: %message%" to channel with id {@chatchannel}
+
+#Message that shows on command execute
+on command:
+	post "%player%: /%full command%" to channel with id {@consolechannel}
+
+#TPS command to check if server has issues
+discord command tps:
+	prefixes: !
+	trigger:
+		post "%tps%" to event-channel
+
+#Warn command
+discord command warn <user> <text>:
+    prefixes: !
+    permissions: manage messages
+    permission message: you no hab perms nob
+    trigger:
+        post "%arg-1% has been warned" to event-channel
+        post "%event-user% warned %arg-1% for reason %arg-2%" to channel with id {@modlog}
+
